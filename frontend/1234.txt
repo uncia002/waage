@@ -1,0 +1,25 @@
+Navbar
+ NewCategory
+ 一括編集ボタン
+ 見たいカテゴリーに移動するbutton
+ 
+ 
+ 
+category
+ 新規
+ 新規object作成window
+ 一括編集ボタン（まとめて削除、）
+
+object
+ 色付け（購入見込み）
+ お気に入りボタン
+ 詳細画面（新規カード出現）
+ 
+ 
+ 
+  
+ 
+ 
+ 
+ 
+
