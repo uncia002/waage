@@ -2,7 +2,7 @@
   <div class="list" v-bind:style="{width: reversedWidth}">
     <!-- category -->
     <div
-    v-for="Category in Categories"
+    v-for="Category in PData"
     v-bind:key="Category.id"
     class="Categorylist">
       <div class="option">
@@ -47,15 +47,15 @@
     <ItemEditWindow
     v-if="editingItem.status"
     :editingItem="editingItem"
-    :item="Categories[editingItem.cateid].Items[editingItem.itemid]"
-    :categoryname="Categories[editingItem.cateid].name"
+    :item="PData[editingItem.cateid].Items[editingItem.itemid]"
+    :categoryname="PData[editingItem.cateid].name"
     @close="closeWindow">
     </ItemEditWindow>
     <!-- newItemWindow -->
     <NewItemEditWindow
     v-if="createNewItem.status"
     :editingItem="createNewItem"
-    :category="Categories[createNewItem.cateid]"
+    :category="PData[createNewItem.cateid]"
     @close="closeWindow"
     @post="posted">
     </NewItemEditWindow>
@@ -65,146 +65,6 @@
 </template>
 
 <script>
-var Categories = [
-  {
-    id: 0,
-    name: 'gadget',
-    Items: [
-      {
-        img: require('../assets/logo.png'),
-        name: 'Apple pencil',
-        price: '15000',
-        boughtday: '12/1/1',
-        fav: true,
-        overview: "asdfghjkl",
-        taglist: ["Necessities","ipad"],
-        alreadyhave:false
-      },
-      {
-        img: require('../assets/logo.png'),
-        name: 'ipad',
-        price: '70000',
-        boughtday: '14/7/1',
-        fav: false,
-        overview: "asdfghjkl",
-        taglist: ["Necessities","ipad"],
-        alreadyhave:true
-      },
-      {
-        img: '',
-        name: 'Macbook 13inch',
-        price: '130000',
-        boughtday: '20/4/1',
-        fav: false,
-        overview: "asdfghjkl",
-        taglist: ["Necessities","ipad"],
-        alreadyhave:true
-      },
-      {
-        img: '',
-        name: 'Iphone 6',
-        price: '70000',
-        boughtday: '16/12/1',
-        fav: false,
-        overview: "asdfghjkl",
-        taglist: ["Necessities","ipad"],
-        alreadyhave:true
-      },
-    ]
-  },
-  {
-    id: 1,
-    name: 'cloath',
-    Items: [
-      {
-        img: '',
-        name: 'Apple pencil',
-        price: '15000',
-        boughtday: '12/1/1',
-        fav: false,
-        overview: "detect",
-        taglist: ["Necessities","ipad"],
-        alreadyhave:true
-      },
-      {
-        img: '',
-        name: 'ipad',
-        price: '70000',
-        boughtday: '14/7/1',
-        fav: false,
-        overview: "asdfghjkl",
-        taglist: ["Necessities","ipad"],
-        alreadyhave:true
-      },
-      {
-        img: '',
-        name: 'Macbook 13inch',
-        price: '130000',
-        boughtday: '20/4/1',
-        fav: false,
-        overview: "detect",
-        taglist: ["Necessities","ipad"],
-        alreadyhave:true
-      },
-      {
-        img: '',
-        name: 'Iphone 6',
-        price: '70000',
-        boughtday: '16/12/1',
-        fav: false,
-        overview: "detect",
-        taglist: ["Necessities","ipad"],
-        alreadyhave:true
-      },
-    ]
-  },
-  {
-    id: 2,
-    name: 'hobby',
-    Items: [
-      {
-        img: '',
-        name: 'Apple pencil',
-        price: '15000',
-        boughtday: '12/1/1',
-        fav: false,
-        overview: "detect",
-        taglist: ["Necessities","ipad"],
-        alreadyhave:true
-      },
-      {
-        img: '',
-        name: 'ipad',
-        price: '70000',
-        boughtday: '14/7/1',
-        fav: false,
-        overview: "detect",
-        taglist: ["Necessities","ipad"],
-        alreadyhave:true
-      },
-      {
-        img: '',
-        name: 'Macbook 13inch',
-        price: '130000',
-        boughtday: '20/4/1',
-        fav: false,
-        overview: "detect",
-        taglist: ["Necessities","ipad"],
-        alreadyhave:true
-      },
-      {
-        img: '',
-        name: 'Iphone 6',
-        price: '70000',
-        boughtday: '16/12/1',
-        fav: false,
-        overview: "detect",
-        taglist: ["Necessities","ipad"],
-        alreadyhave:true
-      },
-    ]
-  }
-]
 import draggable from 'vuedraggable'
 import ItemEditWindow from './ItemEdit.vue'
 import NewItemEditWindow from './NewItemEdit.vue'
@@ -213,7 +73,6 @@ export default {
   name: "two-lists",
   data () {
     return {
-      Categories:Categories,
       editingItem:{
         status: false,
         cateid:0,
@@ -225,6 +84,7 @@ export default {
       }
     }
   },
+  props: ["PData"],
   components: {
     draggable,
     'ItemEditWindow':ItemEditWindow,
@@ -232,7 +92,7 @@ export default {
   },
   computed: {
     reversedWidth: function() {
-      windowsize=Categories.length*(300+2);
+      windowsize=this.PData.length*(300+2);
       console.log(windowsize)
       return windowsize+"px"
     }
@@ -256,11 +116,11 @@ export default {
 
     //item
     totrue: function(cat_id,index){
-      Categories[cat_id].Items[index].fav=true
+      this.PData[cat_id].Items[index].fav=true
 
     },
     tofalse: function(cat_id,index){
-      Categories[cat_id].Items[index].fav=false
+      this.PData[cat_id].Items[index].fav=false
     },
     enableEditing: function(cateid,itemid){
       this.editingItem.status=true
@@ -280,7 +140,7 @@ export default {
     },
     posted: function(newitem){
       this.createNewItem.status=false
-      this.Categories[this.createNewItem.cateid].Items.push(newitem)
+      this.PData[this.createNewItem.cateid].Items.push(newitem)
     }
   },
 }
