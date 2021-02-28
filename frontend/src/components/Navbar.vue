@@ -1,11 +1,11 @@
 <template>
 <div class="navbar">
   <img src="../assets/plus.svg" @click="newcategory">
-  <div class="group" v-if="this.newCategory.status">
+  <div class="group" v-if="this.CreateCategory.status">
     <h4>New Category Item</h4>
     <label for="text2"></label>
     <div class="search_bar">
-      <input id="text2" type="text" placeholder="キーワードを入力">
+      <input id="text2" type="text" placeholder="キーワードを入力" v-model="inputdata" @keyup.enter="submit(inputdata)" >
     </div>
   </div>
 </div>
@@ -13,18 +13,30 @@
 
 <script>
 export default {
+  props: ["PData"],
   data() {
     return {
-      newCategory:{
+      CreateCategory:{
         status:false,
         name: null
-      }
+      },
+      inputdata:null,
     }
   },
   methods:{
     newcategory: function(){
-      this.newCategory.status=true
+      this.CreateCategory.status=true
       window.console.log("faaaawwwww")
+    },
+    submit: function(categoryname){
+      var newcategory=
+      {
+        id: 0,
+        name: categoryname,
+        Items: []
+      }
+      this.PData.push(newcategory)
+      this.CreateCategory.status=false
     }
   }
 }
