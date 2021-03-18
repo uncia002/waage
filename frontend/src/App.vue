@@ -1,8 +1,11 @@
 <template>
   <div id="app">
-    <Navbar :PData="PData"></Navbar>
+    <Navbar :PData="PData" :detailviewActive="detailviewActive"></Navbar>
     <div class="main">
-      <Category :PData="PData"></Category>
+      <div class="margin">
+
+      </div>
+      <Category :PData="PData" :detailviewActive="detailviewActive"></Category>
     </div>
   </div>
 </template>
@@ -14,13 +17,13 @@ import Category from './components/CategoryList.vue'
 var PersonalData = [
   {
     id: 0,
-    name: 'gadget',
+    name: 'Gadget',
     Items: [
       {
         img: require('./assets/logo.png'),
         name: 'Apple pencil',
         price: '15000',
-        boughtday: '12/1/1',
+        boughtday: '12-1-1',
         fav: true,
         overview: "asdfghjkl",
         taglist: ["Necessities","ipad"],
@@ -30,7 +33,7 @@ var PersonalData = [
         img: require('./assets/logo.png'),
         name: 'ipad',
         price: '70000',
-        boughtday: '14/7/1',
+        boughtday: '14-1-1',
         fav: false,
         overview: "asdfghjkl",
         taglist: ["Necessities","ipad"],
@@ -40,7 +43,7 @@ var PersonalData = [
         img: '',
         name: 'Macbook 13inch',
         price: '130000',
-        boughtday: '20/4/1',
+        boughtday: '20-3-1',
         fav: false,
         overview: "asdfghjkl",
         taglist: ["Necessities","ipad"],
@@ -50,7 +53,7 @@ var PersonalData = [
         img: '',
         name: 'Iphone 6',
         price: '70000',
-        boughtday: '16/12/1',
+        boughtday: '16-12-1',
         fav: false,
         overview: "asdfghjkl",
         taglist: ["Necessities","ipad"],
@@ -60,13 +63,13 @@ var PersonalData = [
   },
   {
     id: 1,
-    name: 'cloath',
+    name: 'Cloth',
     Items: [
       {
         img: '',
         name: 'Apple pencil',
         price: '15000',
-        boughtday: '12/1/1',
+        boughtday: '12-1-1',
         fav: false,
         overview: "detect",
         taglist: ["Necessities","ipad"],
@@ -76,7 +79,7 @@ var PersonalData = [
         img: '',
         name: 'ipad',
         price: '70000',
-        boughtday: '14/7/1',
+        boughtday: '14-1-1',
         fav: false,
         overview: "asdfghjkl",
         taglist: ["Necessities","ipad"],
@@ -86,7 +89,7 @@ var PersonalData = [
         img: '',
         name: 'Macbook 13inch',
         price: '130000',
-        boughtday: '20/4/1',
+        boughtday: '2022-3-1',
         fav: false,
         overview: "detect",
         taglist: ["Necessities","ipad"],
@@ -96,7 +99,7 @@ var PersonalData = [
         img: '',
         name: 'Iphone 6',
         price: '70000',
-        boughtday: '16/12/1',
+        boughtday: '2216-12-1',
         fav: false,
         overview: "detect",
         taglist: ["Necessities","ipad"],
@@ -106,13 +109,13 @@ var PersonalData = [
   },
   {
     id: 2,
-    name: 'hobby',
+    name: 'Hobby',
     Items: [
       {
         img: '',
         name: 'Apple pencil',
         price: '15000',
-        boughtday: '12/1/1',
+        boughtday: '2012-1-1',
         fav: false,
         overview: "detect",
         taglist: ["Necessities","ipad"],
@@ -122,7 +125,7 @@ var PersonalData = [
         img: '',
         name: 'ipad',
         price: '70000',
-        boughtday: '14/7/1',
+        boughtday: '1114-1-1',
         fav: false,
         overview: "detect",
         taglist: ["Necessities","ipad"],
@@ -132,7 +135,7 @@ var PersonalData = [
         img: '',
         name: 'Macbook 13inch',
         price: '130000',
-        boughtday: '20/4/1',
+        boughtday: '1120-3-1',
         fav: false,
         overview: "detect",
         taglist: ["Necessities","ipad"],
@@ -142,7 +145,7 @@ var PersonalData = [
         img: '',
         name: 'Iphone 6',
         price: '70000',
-        boughtday: '16/12/1',
+        boughtday: '1116-12-1',
         fav: false,
         overview: "detect",
         taglist: ["Necessities","ipad"],
@@ -155,13 +158,31 @@ export default {
   name: 'App',
   data(){
     return{
-      PData:PersonalData
+      PData:PersonalData,
+      detailviewActive:[
+      ]
     }
   },
   components: {
   'Navbar': Navbar,
   'Category': Category,
-  }
+  },
+  mounted(){
+    this.$nextTick(function(){
+      let array
+      for (var i=0;i<this.PData.length;i++){
+        array=[]
+        for (var j=0;j<this.PData[i].Items.length;j++){
+          array.push(false)
+        }
+        this.detailviewActive.push(array)
+      }
+    })
+    console.log(this.detailviewActive)
+
+
+  },
+
 }
 </script>
 
@@ -169,7 +190,9 @@ export default {
 html,body{
   margin: 0;
   height: 100%;
+  overflow-y: hidden;
 }
+
 
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
@@ -179,13 +202,15 @@ html,body{
   position: relative;
   height: 100%;
   width: 100%;
-  overflow-y: scroll;
-
 }
-
+.app::-webkit-scrollbar {
+  display: none;
+}
+.margin{
+  height: 50px;
+}
 .main {
-  height: 100%;
-  margin-left: 60px;
+  height: calc(100% - 50px);
 }
 
 </style>

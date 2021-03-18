@@ -7,6 +7,7 @@ import vuetify from '@/plugins/vuetify' // path to vuetify export
 
 
 
+window.Vue = require('vue');
 
 Vue.config.productionTip = false
 
@@ -16,5 +17,4 @@ new Vue({
   router,
   components: { App },
   template: '<App/>',
-  vuetify
 }).$mount('#app')
