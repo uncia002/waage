@@ -12,7 +12,9 @@
         <button class="newitembotton" @click="enableCreating(Category.id)" >a</button>
       </div>
       <div class="itemlist">
-        <draggable class="list-group" :list="Category.Items" group="people" @change="log">
+        <draggable class="list-group" :list="Category.Items" group="people" @change="log" v-bind:options="{
+                animation: 200,  //アニメーション
+            }">
           <div
             class="list-group-item"
             v-for="(item,index) in Category.Items"
@@ -70,6 +72,13 @@
     @close="closeWindow"
     @post="posted">
     </NewItemEditWindow>
+
+    <div class="newCategory">
+      <input type="text" name="" v-model="newCategoryName" placeholder="New Category Name" class="newCategoryForm" @keyup.enter="NewCategoryPush">
+      <div class="newCategoryPost">
+        <button type="button" name="button" @click="NewCategoryPush"><a>送信</a></button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -97,7 +106,8 @@ export default {
       result: [],
       delay: 200,
       clicks: 0,
-      timer: null
+      timer: null,
+      newCategoryName: ""
 
     }
   },
@@ -110,7 +120,7 @@ export default {
   },
   computed: {
     reversedWidth() {
-      windowsize=this.PData.length*(300+2);
+      windowsize=(this.PData.length+1)*(300+5)+5+(document.body.clientWidth-610);
       console.log(windowsize)
       return windowsize+"px"
     },
@@ -175,27 +185,43 @@ export default {
       this.$set(this.detailviewActive[number],index,!this.detailviewActive[number][index])
     },
     oneClick: function(number,index){
-          this.clicks++
-          if(this.clicks === 1) {
-            var self = this
-            this.timer = setTimeout(function() {
-              self.editingItem.status=true
-              self.editingItem.cateid=number
-              self.editingItem.itemid=index
-              self.clicks = 0
-            }, this.delay);
-          } else{
-             clearTimeout(this.timer);
-             this.clicks = 0;
-             this.$set(this.detailviewActive[number],index,!this.detailviewActive[number][index])
-          }
+        this.clicks++
+        if(this.clicks === 1) {
+          var self = this
+          this.timer = setTimeout(function() {
+            self.editingItem.status=true
+            self.editingItem.cateid=number
+            self.editingItem.itemid=index
+            self.clicks = 0
+          }, this.delay);
+        } else{
+           clearTimeout(this.timer);
+           this.clicks = 0;
+           this.$set(this.detailviewActive[number],index,!this.detailviewActive[number][index])
         }
+      },
+    NewCategoryPush(){
+      console.log("dfgdfg")
+      this.newCategoryName.slice(0,1).toUpperCase() + this.newCategoryName.slice(1)
+      var newCategory={
+        id: this.PData.length,
+        name: this.newCategoryName,
+        Items: []
+      }
+      this.PData.push(newCategory)
+      this.newCategoryName=""
+    },
 
   },
 }
 </script>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap');
+
+:focus{
+  outline: none;
+}
 ::-webkit-scrollbar {
     width: 10px;
 }
@@ -222,12 +248,13 @@ export default {
 .Categorylist{
   height: 100%;
   width: 300px;
-  margin-left: 2px;
+  margin-top: 5px;
+  margin-left: 5px;
   background-color: #E8E8E8;
   border-radius: 5px;
 }
 .option{
-  width: 300px;
+  width: 100%;
   height: 40px;
   padding-top:5px;
   padding-bottom:5px;
@@ -264,6 +291,17 @@ export default {
   border-radius: 5px;
   box-shadow:2px 2px 1px rgba(0,0,0,0.1);
   position:relative;
+
+  cursor: pointer;
+
+
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
 }
 .item-detail{
   display: flex;
@@ -328,5 +366,41 @@ export default {
 }
 
 
+.newCategory{
+  height: 100px;
+  width: 300px;
+  margin-top:5px;
+  margin-left: 5px;
+  margin-right: 5px;
+  padding: 10px;
+  background-color: #E8E8E8;
+  border-radius: 5px;
+
+}
+.newCategoryForm{
+  height: 35px;
+  width: 280px;
+  padding: 0 10px;
+  text-align: left;
+  font-size: 20px;
+  color:black;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow:2px 2px 1px rgba(0,0,0,0.1);
+}
+.newCategoryPost{
+  height: 35px;
+  width: 80px;
+  margin-top: 10px;
+  padding:5px;
+  background-color: #20FC8F;
+  border-radius: 5px;
+  box-shadow:3px 3px 2px rgba(0,0,0,0.1);
+  font-family: 'Noto Sans JP', sans-serif;
+
+}
+.newCategoryPost a{
+  color: #454545;
+}
 
 </style>

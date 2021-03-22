@@ -192,6 +192,7 @@ html,body{
   height: 100%;
   overflow-y: hidden;
 }
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap');
 
 
 #app {
@@ -207,7 +208,7 @@ html,body{
   display: none;
 }
 .margin{
-  height: 50px;
+  height: 70px;
 }
 .main {
   height: calc(100% - 50px);

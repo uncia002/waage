@@ -36,20 +36,20 @@ let i
 const colorList=[
   '#E71D36','#FF9F1C','#2EC4B6','#F4EDED','#464D77',
 ]
-var newitem = {
-  img: undefined,
-  name: undefined,
-  price:undefined,
-  boughtday: undefined,
-  fav: false,
-  overview: undefined,
-  taglist: [],
-  alreadyhave:false
-}
+
 export default {
   data() {
     return {
-      newitem:newitem,
+      newitem:{
+        img: undefined,
+        name: undefined,
+        price:undefined,
+        boughtday: undefined,
+        fav: false,
+        overview: undefined,
+        taglist: [],
+        alreadyhave:false
+      },
       newtagactive: false,
       newtagname: "",
       detailviewActive:[]

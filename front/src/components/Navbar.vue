@@ -1,22 +1,31 @@
 <template>
-<div class="navbar">
-  <div class="create" @click="newcategory"></div>
-  <div v-for="category in this.PData" :id="category.id" :name="category.name" class="transbutton" @click="move(category.id)">
-    <a>{{ reversedTitle(category.name) }}</a>
-  </div>
-  <div class="group" v-show="this.CreateCategory.status">
-    <h4>New Category Item</h4>
-    <label for="navbarform"></label>
-    <div class="search_bar">
-      <input ref="navbarform" id="navbarform" type="text" placeholder="キーワードを入力" v-model="inputdata" @keyup.enter="submit(inputdata)" >
+<div class="">
+  <div class="navbar">
+    <h4>LOGO</h4>
+    <div class="">
+
     </div>
+  </div>
+  <div class="CategoryBar">
+    <draggable  v-model="this.PData" draggable=".category" class="CategoryButtons" group="category" tag="div" >
+      <div v-for="category in PData" :key="category.name" class="transbutton" @click="move(category.id)">
+        <a>{{category.name}}</a>
+        <!-- {{ reversedTitle(category.name) }} -->
+      </div>
+    </draggable>
+    <!-- なぜかdraggableが使えない -->
   </div>
 </div>
 </template>
 
 
 <script>
+import draggable from 'vuedraggable'
 export default {
+  name:"Navbar",
+  components:{
+    'draggable': draggable,
+  },
   props: ["PData","detailviewActive"],
   data() {
     return {
@@ -71,19 +80,20 @@ export default {
       return function (name) {
         return name.slice(0,2)
       }
-    }
+    },
   },
 }
 </script>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 .navbar {
   display: flex;
   position:fixed;
   width: 100%;
-  height: 50px;
+  height: 40px;
   color: white;
-  background-color: #F03A47;
+  background-color: #111111;
   z-index: 1;
   padding: 5px;
 
@@ -115,7 +125,7 @@ export default {
   margin-top: 5px;
   margin-bottom: 5px;
   text-align: left;
-  color:;
+  color: white;
 
 }
 .search_bar{
@@ -137,19 +147,34 @@ export default {
   box-sizing: border-box; /*横幅の解釈をpadding, borderまでとする*/
   padding-left: 10px;
 }
+.CategoryBar{
+  position: fixed;
+  width: 100%;
+  height: 30px;
+  top: 40px;
+  padding-top: 4px;
+  padding-left: 4px;
+  color: lightgrey;
+  background-color: #111111;
+  border-top: solid 1px #454545;
+
+}
+.CategoryButtons{
+  display: flex;
+}
+
+
 .transbutton{
-  height:40px;
-  width:40px;
-  border-radius: 50%;
-  display: table;
-  text-align: center;
-  margin-left: 8px;
+  height:18px;
+  padding: 0 20px;
+  border-radius: 2px;
+  border-right: solid 1px #454545;
+
+  cursor: pointer;
+  font-family: 'Roboto', sans-serif;
 }
 .transbutton a{
-  font-size: 25px;
-  display: table-cell;
-  vertical-align: middle;
-  text-decoration: underline white;
+  font-size: 16px;
 
 }
 
