@@ -1,9 +1,0 @@
-Vue.jsとFlaskでフルスタックなWebアプリの開発環境を構築 その１〜〜環境構築〜〜
-https://kittagon.hateblo.jp/entry/2018/08/27/011354
-
--- vue --
-ajax axios でデータを受け取る
-https://jp.vuejs.org/v2/cookbook/using-axios-to-consume-apis.html
-
-【JavaScript入門】FormやAjaxのPOST送信・取得の方法まとめ！
-https://www.sejuku.net/blog/53627
