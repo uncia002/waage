@@ -23,7 +23,7 @@ npm install
 
 ## DEMO
 
-github pages
+https://uncia002.github.io/waage
 
 
 ## Author
